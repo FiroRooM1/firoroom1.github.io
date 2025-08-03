@@ -289,7 +289,7 @@ async function getSummonerInfo(riotId) {
         const rankData = rankResponse.data;
 
         // アイコンURLを生成（最新バージョンを使用）
-        const iconUrl = `https://ddragon.leagueoflegends.com/cdn/14.1.1/img/profileicon/${summonerData.profileIconId}.png`;
+        const iconUrl = `https://ddragon.leagueoflegends.com/cdn/15.15.1/img/profileicon/${summonerData.profileIconId}.png`;
 
         return {
             name: summonerData.name,
