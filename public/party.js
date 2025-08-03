@@ -164,6 +164,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
+        // 現在のスクロール位置を保存
+        const isScrolledToBottom = chatMessages.scrollTop + chatMessages.clientHeight >= chatMessages.scrollHeight - 10;
+
         chatMessages.innerHTML = '';
         
         if (!Array.isArray(messages) || messages.length === 0) {
@@ -176,7 +179,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             chatMessages.appendChild(messageElement);
         });
         
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        // スクロール位置を調整
+        if (isScrolledToBottom) {
+            // 以前に最下部にいた場合は、新しいメッセージまでスクロール
+            setTimeout(() => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 100);
+        }
+    }
+
+    // 新しいメッセージを追加（自動スクロール付き）
+    function addNewMessage(message) {
+        if (!chatMessages) return;
+
+        const messageElement = createMessageElement(message);
+        chatMessages.appendChild(messageElement);
+        
+        // 新しいメッセージが追加されたら自動的にスクロール
+        setTimeout(() => {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 100);
     }
 
     // メッセージ要素を作成
@@ -266,13 +288,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             recentReceivedMessages.set(messageKey, true);
             setTimeout(() => recentReceivedMessages.delete(messageKey), 5000);
 
-            const messageElement = createMessageElement(message);
-            if (chatMessages) {
-            chatMessages.appendChild(messageElement);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            } else {
-                console.error('chatMessages要素が見つかりません');
-            }
+            // 新しいメッセージ追加関数を使用
+            addNewMessage(message);
         });
 
         isSubscribed = true;
