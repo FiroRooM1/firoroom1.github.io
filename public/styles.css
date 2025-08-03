@@ -1474,19 +1474,46 @@ input:focus {
 }
 
 .summoner-icon-large {
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
     overflow: hidden;
     border: 2px solid #785A28;
     box-shadow: 0 0 10px rgba(200, 170, 110, 0.3);
     flex-shrink: 0;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .summoner-icon-large img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
+    display: block;
+    /* Edge対応のための追加プロパティ */
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+/* Edge対応のための追加スタイル */
+.summoner-icon-large::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    z-index: -1;
 }
 
 .summoner-info-large {
