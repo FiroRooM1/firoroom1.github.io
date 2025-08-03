@@ -64,12 +64,32 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (profile.summoner_info) {
                     updateSummonerInfo(profile.summoner_info);
                 } else if (profile.summoner_name) {
-                    // サモナー名は設定されているが、サモナー情報がない場合は取得を試行
-                    try {
-                        await refreshSummonerInfo();
-                    } catch (error) {
-                        console.error('初期サモナー情報取得エラー:', error);
-                        showErrorMessage('サモナー情報の取得に失敗しました。更新ボタンを押して再試行してください。');
+                    // サモナー名は設定されているが、サモナー情報がない場合は更新ボタンを促すメッセージを表示
+                    summonerNameDisplay.textContent = profile.summoner_name || '';
+                    
+                    // サモナー情報がない場合のプレースホルダー表示
+                    const summonerIcon = document.getElementById('summonerIcon');
+                    const summonerLevel = document.getElementById('summonerLevel');
+                    const rankInfo = document.getElementById('rankInfo');
+                    
+                    if (summonerIcon) {
+                        summonerIcon.src = '/default-avatar.png';
+                        summonerIcon.alt = 'サモナーアイコン';
+                    }
+                    
+                    if (summonerLevel) {
+                        summonerLevel.textContent = '更新ボタンを押してサモナー情報を取得してください';
+                        summonerLevel.style.color = '#937341';
+                        summonerLevel.style.fontStyle = 'italic';
+                    }
+                    
+                    if (rankInfo) {
+                        rankInfo.innerHTML = `
+                            <div style="text-align: center; color: #937341; font-style: italic; padding: 20px;">
+                                <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+                                更新ボタンを押して最新のランク情報を取得してください
+                            </div>
+                        `;
                     }
                 }
                 
