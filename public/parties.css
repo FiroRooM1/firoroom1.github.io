@@ -1,0 +1,190 @@
+/* パーティーページ用スタイル */
+
+.parties-section {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    color: #ffd700;
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.parties-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+}
+
+.party-card {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.party-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.party-header {
+    text-align: center;
+}
+
+.party-title {
+    color: #ffd700;
+    font-size: 18px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.party-meta {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.member-count,
+.game-mode,
+.created-at {
+    background: rgba(0, 180, 216, 0.2);
+    color: #00b4d8;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid rgba(0, 180, 216, 0.3);
+}
+
+.party-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.join-btn {
+    background: linear-gradient(135deg, #7B68EE 0%, #6A5ACD 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    min-width: 120px;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(123, 104, 238, 0.3);
+}
+
+.join-btn:hover {
+    background: linear-gradient(135deg, #6A5ACD 0%, #5A4FCF 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(123, 104, 238, 0.4);
+}
+
+.disband-btn {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 120px;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+}
+
+.disband-btn:hover {
+    background: linear-gradient(135deg, #ee5a52 0%, #d63031 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.join-btn i {
+    font-size: 16px;
+}
+
+.no-parties {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.error-message {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+.success-message {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .parties-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .party-card {
+        padding: 15px;
+    }
+    
+    .party-meta {
+        gap: 10px;
+    }
+    
+    .join-btn, .disband-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+        min-width: 100px;
+    }
+    
+    .join-btn {
+        background: linear-gradient(135deg, #7B68EE 0%, #6A5ACD 100%);
+        box-shadow: 0 2px 8px rgba(123, 104, 238, 0.3);
+    }
+    
+    .disband-btn {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+    }
+} 
