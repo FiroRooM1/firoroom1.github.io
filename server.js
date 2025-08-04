@@ -554,6 +554,31 @@ app.post('/api/auth/register', authLimiter, async (req, res) => {
             });
         }
 
+        // 詳細なバリデーション
+        if (!validateInput(username, 'username')) {
+            return res.status(400).json({ 
+                message: 'ユーザー名は3-20文字の英数字とアンダースコアのみ使用可能です' 
+            });
+        }
+        
+        if (!validateInput(displayName, 'displayName')) {
+            return res.status(400).json({ 
+                message: '表示名は1-50文字で入力してください' 
+            });
+        }
+        
+        if (!validateInput(summonerName, 'summonerName')) {
+            return res.status(400).json({ 
+                message: 'サモナー名は1-20文字で入力してください' 
+            });
+        }
+        
+        if (!validateInput(password, 'password')) {
+            return res.status(400).json({ 
+                message: 'パスワードは8文字以上で入力してください' 
+            });
+        }
+
         // Supabase接続確認
         if (!supabase.isConnected()) {
             return res.status(500).json({ 
@@ -619,11 +644,14 @@ app.post('/api/auth/register', authLimiter, async (req, res) => {
     } catch (error) {
         console.error('ユーザー作成エラー詳細:', error);
         console.error('ユーザー作成例外:', error);
+        
+        // 本番環境では詳細なエラー情報を隠す
+        const errorMessage = process.env.NODE_ENV === 'production' 
+            ? '登録に失敗しました。しばらく時間をおいて再度お試しください。'
+            : '登録エラー: ' + error.message;
+            
         res.status(500).json({ 
-            message: '登録エラー: ' + error.message,
-            details: error.message,
-            hint: error.hint || '',
-            code: error.code || ''
+            message: errorMessage
         });
     }
 });
@@ -1383,6 +1411,53 @@ app.get('/api/debug/riot-api-test', async (req, res) => {
         });
     }
 });
+
+// 入力バリデーション関数
+function validateInput(input, type) {
+    if (!input || typeof input !== 'string') {
+        return false;
+    }
+    
+    // 基本的な長さ制限
+    if (input.length < 1 || input.length > 100) {
+        return false;
+    }
+    
+    // 特殊文字の制限
+    const dangerousChars = /[<>\"'&]/;
+    if (dangerousChars.test(input)) {
+        return false;
+    }
+    
+    switch (type) {
+        case 'username':
+            // ユーザー名は英数字とアンダースコアのみ
+            return /^[a-zA-Z0-9_]{3,20}$/.test(input);
+        case 'password':
+            // パスワードは8文字以上
+            return input.length >= 8;
+        case 'displayName':
+            // 表示名は1-50文字
+            return input.length >= 1 && input.length <= 50;
+        case 'summonerName':
+            // サモナー名は1-20文字
+            return input.length >= 1 && input.length <= 20;
+        default:
+            return true;
+    }
+}
+
+// HTMLエスケープ関数
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
 
 // エラーハンドリングミドルウェア
 app.use((err, req, res, next) => {
