@@ -142,6 +142,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
+    // HTMLエスケープ関数
+    function escapeHtml(text) {
+        if (!text) return '';
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+    }
+
     // 受け取った申請要素を作成
     function createReceivedRequestElement(request) {
         const div = document.createElement('div');
@@ -167,25 +180,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         div.innerHTML = `
             <div class="request-header">
                 <div class="applicant-info">
-                    <img src="${request.applicant.summoner_info?.iconUrl || '/default-avatar.png'}" alt="申請者アイコン" class="applicant-icon">
+                    <img src="${escapeHtml(request.applicant.summoner_info?.iconUrl || '/default-avatar.png')}" alt="申請者アイコン" class="applicant-icon">
                     <div>
-                        <h3>${request.applicant.display_name || request.applicant.username}</h3>
-                        <p>${request.applicant.summoner_info?.ranks?.[0]?.tier || 'ランク未設定'}</p>
+                        <h3>${escapeHtml(request.applicant.display_name || request.applicant.username)}</h3>
+                        <p>${escapeHtml(request.applicant.summoner_info?.ranks?.[0]?.tier || 'ランク未設定')}</p>
                     </div>
                 </div>
-                <span class="status ${statusClass}">${statusText}</span>
+                <span class="status ${statusClass}">${escapeHtml(statusText)}</span>
             </div>
             <div class="request-content">
-                <h4>${request.post.title}</h4>
-                <p><strong>希望レーン:</strong> ${request.preferred_lane}</p>
-                ${request.message ? `<p><strong>メッセージ:</strong> ${request.message}</p>` : ''}
+                <h4>${escapeHtml(request.post.title)}</h4>
+                <p><strong>希望レーン:</strong> ${escapeHtml(request.preferred_lane)}</p>
+                ${request.message ? `<p><strong>メッセージ:</strong> ${escapeHtml(request.message)}</p>` : ''}
             </div>
             ${request.status === 'pending' ? `
                 <div class="request-actions">
-                    <button class="accept-btn" onclick="acceptRequest('${request.id}')">
+                    <button class="accept-btn" onclick="acceptRequest('${escapeHtml(request.id)}')">
                         <i class="fas fa-check"></i> 承認
                     </button>
-                    <button class="reject-btn" onclick="rejectRequest('${request.id}')">
+                    <button class="reject-btn" onclick="rejectRequest('${escapeHtml(request.id)}')">
                         <i class="fas fa-times"></i> 拒否
                     </button>
                 </div>
@@ -220,14 +233,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         div.innerHTML = `
             <div class="request-header">
                 <div class="post-info">
-                    <h3>${request.post.title}</h3>
-                    <p>投稿者: ${request.post.author.display_name || request.post.author.username}</p>
+                    <h3>${escapeHtml(request.post.title)}</h3>
+                    <p>投稿者: ${escapeHtml(request.post.author.display_name || request.post.author.username)}</p>
                 </div>
-                <span class="status ${statusClass}">${statusText}</span>
+                <span class="status ${statusClass}">${escapeHtml(statusText)}</span>
             </div>
             <div class="request-content">
-                <p><strong>希望レーン:</strong> ${request.preferred_lane}</p>
-                ${request.message ? `<p><strong>メッセージ:</strong> ${request.message}</p>` : ''}
+                <p><strong>希望レーン:</strong> ${escapeHtml(request.preferred_lane)}</p>
+                ${request.message ? `<p><strong>メッセージ:</strong> ${escapeHtml(request.message)}</p>` : ''}
             </div>
         `;
 
