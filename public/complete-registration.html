@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユーザー登録完了 - LoL Matching</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">LoL Matching</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main class="main-content">
+            <div class="complete-registration-container">
+                <div class="complete-registration-card">
+                    <div class="registration-header">
+                        <i class="fas fa-user-plus registration-icon"></i>
+                        <h1>ユーザー登録完了</h1>
+                        <p>Discordログインが完了しました！最後に必要な情報を入力してください。</p>
+                    </div>
+
+                    <form id="completeRegistrationForm" class="complete-registration-form">
+                        <div class="form-group">
+                            <label for="displayName">表示名 *</label>
+                            <input type="text" id="displayName" name="displayName" placeholder="他のユーザーに表示される名前" required>
+                            <small>1-50文字で入力してください</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="summonerName">サモナー名 *</label>
+                            <input type="text" id="summonerName" name="summonerName" placeholder="League of Legendsのサモナー名" required>
+                            <small>1-20文字で入力してください</small>
+                        </div>
+
+                        <div id="errorMessage" class="error-message" style="display: none;"></div>
+                        <div id="successMessage" class="success-message" style="display: none;"></div>
+
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <i class="fas fa-check"></i>
+                            登録完了
+                        </button>
+                    </form>
+
+                    <div class="registration-info">
+                        <h3>入力する情報について</h3>
+                        <ul>
+                            <li><strong>表示名</strong>: 他のユーザーに表示される名前です。本名やニックネームを入力してください。</li>
+                            <li><strong>サモナー名</strong>: League of Legendsで使用しているサモナー名を正確に入力してください。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('completeRegistrationForm');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            const submitBtn = document.getElementById('submitBtn');
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const displayName = document.getElementById('displayName').value.trim();
+                const summonerName = document.getElementById('summonerName').value.trim();
+
+                // 入力検証
+                if (!displayName || !summonerName) {
+                    showError('表示名とサモナー名を入力してください');
+                    return;
+                }
+
+                if (displayName.length < 1 || displayName.length > 50) {
+                    showError('表示名は1-50文字で入力してください');
+                    return;
+                }
+
+                if (summonerName.length < 1 || summonerName.length > 20) {
+                    showError('サモナー名は1-20文字で入力してください');
+                    return;
+                }
+
+                // 送信ボタンを無効化
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 登録中...';
+
+                try {
+                    const response = await fetch('/api/auth/complete-registration', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({
+                            displayName,
+                            summonerName
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || '登録に失敗しました');
+                    }
+
+                    const data = await response.json();
+                    showSuccess('ユーザー登録が完了しました！');
+                    
+                    // 3秒後にトップページにリダイレクト
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 3000);
+
+                } catch (error) {
+                    showError(error.message);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> 登録完了';
+                }
+            });
+
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+            }
+
+            function showSuccess(message) {
+                successMessage.textContent = message;
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
