@@ -1,0 +1,4 @@
+[2025-08-22 21:58:56] production.ERROR: Maximum execution time of 60 seconds exceeded {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Maximum execution time of 60 seconds exceeded at C:\\Users\\1\\Documents\\引き継ぎ\\laravel\\vendor\\symfony\\mailer\\Transport\\Smtp\\Stream\\SocketStream.php:154)
+[stacktrace]
+#0 {main}
+"} 
