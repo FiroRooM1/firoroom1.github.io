@@ -1,0 +1,345 @@
+/*
+Theme Name: LoL Team Splitter
+Description: League of Legends カスタムゲーム用チーム分けツールのWordPressテーマ
+Version: 1.0
+Author: LoL Team Splitter
+Text Domain: lol-team-splitter
+Domain Path: /languages
+*/
+
+/* League of Legends テーマのカスタムスタイル */
+
+:root {
+    --lol-gold: #C9AA71;
+    --lol-blue: #0F1419;
+    --lol-dark-blue: #0A0E13;
+    --lol-red: #C89B3C;
+    --lol-silver: #A09B8C;
+    --lol-bronze: #8B4513;
+    --lol-platinum: #E6E6FA;
+    --lol-diamond: #B9F2FF;
+}
+
+body {
+    background: linear-gradient(135deg, var(--lol-blue) 0%, var(--lol-dark-blue) 100%);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+}
+
+/* ナビゲーションバー */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: white !important;
+}
+
+.navbar-brand:hover {
+    color: var(--lol-gold) !important;
+}
+
+.nav-link {
+    color: white !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--lol-gold) !important;
+}
+
+/* ヒーローセクション */
+.hero-section {
+    background: linear-gradient(135deg, 
+        rgba(15, 20, 25, 0.9) 0%, 
+        rgba(10, 14, 19, 0.9) 50%,
+        rgba(15, 20, 25, 0.9) 100%),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23C9AA71" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 70%, rgba(201, 170, 113, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* チャンピオンカード */
+.champion-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.champion-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(201, 170, 113, 0.3);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.champion-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(201, 170, 113, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.champion-card:hover::before {
+    left: 100%;
+}
+
+.champion-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--lol-gold);
+    box-shadow: 0 10px 30px rgba(201, 170, 113, 0.3);
+}
+
+.champion-icon {
+    font-size: 3rem;
+    color: var(--lol-gold);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.champion-card h5 {
+    color: var(--lol-gold);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.champion-card p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* ボタンスタイル */
+.btn-warning {
+    background: linear-gradient(45deg, var(--lol-gold), var(--lol-red));
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-warning::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-warning:hover::before {
+    left: 100%;
+}
+
+.btn-warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(201, 170, 113, 0.4);
+    color: white;
+}
+
+.btn-outline-light {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-weight: 500;
+    padding: 12px 30px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--lol-gold);
+    color: var(--lol-gold);
+    transform: translateY(-2px);
+}
+
+/* 機能セクション */
+.features-section {
+    background: rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.features-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23C9AA71" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    pointer-events: none;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(201, 170, 113, 0.2);
+    border-radius: 15px;
+    padding: 2.5rem 2rem;
+    height: 100%;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--lol-gold), var(--lol-red));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover::before {
+    transform: scaleX(1);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--lol-gold);
+    box-shadow: 0 10px 25px rgba(201, 170, 113, 0.2);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: var(--lol-gold);
+    margin-bottom: 1.5rem;
+}
+
+.feature-card h4 {
+    color: var(--lol-gold);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+}
+
+/* CTAセクション */
+.cta-section {
+    background: linear-gradient(135deg, 
+        rgba(201, 170, 113, 0.1) 0%, 
+        rgba(200, 155, 60, 0.1) 100%);
+    position: relative;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 70% 30%, rgba(201, 170, 113, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* フッター */
+footer {
+    background: var(--lol-dark-blue) !important;
+    border-top: 1px solid rgba(201, 170, 113, 0.2);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .hero-section {
+        text-align: center;
+    }
+    
+    .champion-showcase {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .champion-card {
+        padding: 1.5rem;
+    }
+    
+    .display-4 {
+        font-size: 2.5rem;
+    }
+    
+    .display-5 {
+        font-size: 2rem;
+    }
+}
+
+/* アニメーション */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-section .row > div {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-section .row > div:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+/* ルームに戻るボタンのスタイル */
+#returnToRoomBtn {
+    position: relative;
+}
+
+#returnToRoomBtn::after {
+    content: attr(data-room-id);
+    margin-left: 5px;
+}
+
+/* カスタムテキストボックスのスタイル */
+.form-control.custom-border {
+    border-color: rgb(107, 120, 181) !important;
+    box-shadow: 0 0 0 0.2rem rgba(107, 120, 181, 0.25) !important;
+}
+
+.form-control.custom-border:focus {
+    border-color: rgb(107, 120, 181) !important;
+    box-shadow: 0 0 0 0.2rem rgba(107, 120, 181, 0.25) !important;
+}
